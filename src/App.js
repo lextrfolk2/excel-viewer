@@ -245,10 +245,12 @@ export default function App() {
   };
 
   // Export with formulas (keeps formulas intact)
+  // Export with computed values (instead of formulas)
   const handleExport = () => {
     const wb = XLSX.utils.book_new();
     Object.entries(workbookData).forEach(([sheetName, sheetObj]) => {
-      const ws = XLSX.utils.aoa_to_sheet(sheetObj.raw);
+      // export evaluated values, not formulas
+      const ws = XLSX.utils.aoa_to_sheet(sheetObj.data);
       XLSX.utils.book_append_sheet(wb, ws, sheetName);
     });
     XLSX.writeFile(wb, "updated.xlsx");
